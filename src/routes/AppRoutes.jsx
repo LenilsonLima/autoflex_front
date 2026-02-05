@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, HashRouter } from "react-router-dom";
 import AppLayout from "../components/layout/AppLayout.jsx";
 
 import ProductsRead from "../pages/products/ProductsRead.jsx";
@@ -14,7 +14,7 @@ import ProductionSuggestionRead from "../pages/production/ProductionSuggestionRe
 
 export default function AppRoutes() {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <Routes>
                 <Route element={<AppLayout />}>
                     <Route path="/" element={<Navigate to="/products" replace />} />
@@ -33,6 +33,6 @@ export default function AppRoutes() {
                     <Route path="/production" element={<ProductionSuggestionRead />} />
                 </Route>
             </Routes>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
