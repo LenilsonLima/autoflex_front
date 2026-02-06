@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { api } from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import { ProductMaterialsService } from "../../services/product-materials.service";
+import { RawMaterialsService } from "../../services/raw-materials.service";
+import { ProductsService } from "../../services/products.service";
 
 const ProductMaterialsCreate = () => {
     const [products, setProducts] = useState([]);
@@ -9,8 +11,8 @@ const ProductMaterialsCreate = () => {
 
     const getProducts = async () => {
         try {
-            const response = await api.get('products')
-            setProducts(response.data);
+            const response = await ProductsService.list()
+            setProducts(response);
         } catch (error) {
             alert(error.response.data?.message || 'Erro ao buscar produtos.')
         }
@@ -18,8 +20,8 @@ const ProductMaterialsCreate = () => {
 
     const getRawMaterials = async () => {
         try {
-            const response = await api.get('raw-materials')
-            setRawMaterials(response.data);
+            const response = await RawMaterialsService.list()
+            setRawMaterials(response);
         } catch (error) {
             alert(error.response.data?.message || 'Erro ao buscar matéria prima.')
         }
@@ -40,11 +42,11 @@ const ProductMaterialsCreate = () => {
                 rawMaterialId: Number(formData?.rawMaterialId),
                 requiredQuantity: Number(formData?.requiredQuantity)
             }
-            const response = await api.post('product-materials', body);
-            alert(response.data?.message || 'Produção criada com sucesso.');
+            const response = await ProductMaterialsService.create(body);
+            alert(response.data?.message || 'Composição do produto criada com sucesso.');
             navigation(-1);
         } catch (error) {
-            alert(error.response.data?.message || 'Erro ao cadastrar produção.')
+            alert(error.response.data?.message || 'Erro ao cadastrar composição do produto.')
         }
     }
 

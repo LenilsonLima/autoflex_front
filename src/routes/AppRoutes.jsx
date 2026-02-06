@@ -2,7 +2,6 @@ import { Routes, Route, Navigate, HashRouter } from "react-router-dom";
 import AppLayout from "../components/layout/AppLayout.jsx";
 
 import ProductsRead from "../pages/products/ProductsRead.jsx";
-import ProductsCreate from "../pages/products/ProductsCreate.jsx";
 import ProductsUpdate from "../pages/products/ProductsUpdate.jsx";
 import RawMaterialsRead from "../pages/raw-materials/RawMaterialsRead.jsx";
 import RawMaterialsCreate from "../pages/raw-materials/RawMaterialsCreate.jsx";
@@ -19,7 +18,6 @@ export default function AppRoutes() {
                 <Route element={<AppLayout />}>
                     <Route path="/" element={<Navigate to="/products" replace />} />
                     <Route path="/products" element={<ProductsRead />} />
-                    <Route path="/products/create" element={<ProductsCreate />} />
                     <Route path="/products/update/:id" element={<ProductsUpdate />} />
 
                     <Route path="/raw-materials" element={<RawMaterialsRead />} />

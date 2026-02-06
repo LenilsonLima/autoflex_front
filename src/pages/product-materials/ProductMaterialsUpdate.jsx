@@ -1,28 +1,32 @@
 import { useEffect, useState } from "react";
-import { api } from "../../services/api";
 import { useNavigate, useParams } from "react-router-dom";
+import { ProductMaterialsService } from "../../services/product-materials.service";
+import { ProductsService } from "../../services/products.service";
+import { RawMaterialsService } from "../../services/raw-materials.service";
+import Loading from "../../components/layout/Loading";
 
 const ProductMaterialsUpdate = () => {
     const [productMaterials, setProductMaterials] = useState([]);
     const [products, setProducts] = useState([]);
     const [rawMaterials, setRawMaterials] = useState([]);
+    const [loading, setLoading] = useState(true);
     const params = useParams();
     const id = params?.id;
     const navigation = useNavigate();
 
     const getProductMaterials = async () => {
         try {
-            const response = await api.get(`product-materials/${id}`)
-            setProductMaterials(response.data);
+            const response = await ProductMaterialsService.get(id)
+            setProductMaterials(response);
         } catch (error) {
-            alert(error.response.data?.message || 'Erro ao buscar produção.')
+            alert(error.response.data?.message || 'Erro ao buscar composição do produto.')
         }
     }
 
     const getProducts = async () => {
         try {
-            const response = await api.get('products')
-            setProducts(response.data);
+            const response = await ProductsService.list()
+            setProducts(response);
         } catch (error) {
             alert(error.response.data?.message || 'Erro ao buscar produtos.')
         }
@@ -30,10 +34,13 @@ const ProductMaterialsUpdate = () => {
 
     const getRawMaterials = async () => {
         try {
-            const response = await api.get('raw-materials')
-            setRawMaterials(response.data);
+            setLoading(true);
+            const response = await RawMaterialsService.list()
+            setRawMaterials(response);
         } catch (error) {
             alert(error.response.data?.message || 'Erro ao buscar matéria prima.')
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -48,18 +55,23 @@ const ProductMaterialsUpdate = () => {
         const formValues = new FormData(e.target);
         const formData = Object.fromEntries(formValues);
         try {
+            setLoading(true);
             const body = {
                 productId: Number(formData?.productId),
                 rawMaterialId: Number(formData?.rawMaterialId),
                 requiredQuantity: Number(formData?.requiredQuantity)
             }
-            const response = await api.patch(`product-materials/${id}`, body);
-            alert(response.data?.message || 'Produção criada com sucesso.');
+            const response = await ProductMaterialsService.update(id, body);
+            alert(response?.message || 'Composição do produto atualizada com sucesso.');
             navigation(-1);
         } catch (error) {
-            alert(error.response.data?.message || 'Erro ao cadastrar produção.')
+            alert(error.response.data?.message || 'Erro ao cadastrar composição do produto.')
+        } finally {
+            setLoading(false);
         }
     }
+
+    if (loading) return <Loading />;
 
     return (
         <div className="col">

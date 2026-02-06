@@ -1,16 +1,20 @@
-export default function Button({ children, variant = "primary", ...props }) {
+export default function Button({ text, variant = "primary", ...props }) {
     const base = {
-        padding: "10px 12px",
-        borderRadius: 10,
-        border: "1px solid #2a3a61",
+        width: "100%",
+        maxWidth: "250px",
+        height: "40px",
+        fontSize: "15px",
+        padding: "10px",
+        borderRadius: 5,
+        border: "none",
         cursor: "pointer",
-        background: variant === "primary" ? "#2b6cff" : variant === "danger" ? "#ff3b3b" : "transparent",
+        background: variant === "primary" ? "rgb(43, 168, 91)" : variant === "danger" ? "#ff3b3b" : "transparent",
         color: "#e8eefc",
     };
 
     return (
         <button style={base} {...props}>
-            {children}
+            {text}
         </button>
     );
 }

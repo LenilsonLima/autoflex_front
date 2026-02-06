@@ -1,5 +1,5 @@
-import { api } from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import { RawMaterialsService } from "../../services/raw-materials.service";
 
 const RawMaterialsCreate = () => {
     const navigation = useNavigate();
@@ -13,8 +13,8 @@ const RawMaterialsCreate = () => {
                 name: formData?.name,
                 stockQuantity: Number(formData?.stockQuantity)
             }
-            const response = await api.post('raw-materials', body);
-            alert(response.data?.message || 'Matéria prima criado com sucesso.');
+            const response = await RawMaterialsService.create(body);
+            alert(response?.message || 'Matéria prima criado com sucesso.');
             navigation(-1);
         } catch (error) {
             alert(error.response.data?.message || 'Erro ao cadastrar matéria prima.')

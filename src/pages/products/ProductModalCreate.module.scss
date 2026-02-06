@@ -1,0 +1,72 @@
+.container_product_create {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @keyframes form {
+        100% {
+            transform: translateY(0%);
+        }
+    }
+
+    form {
+        background-color: #fff;
+        width: 100%;
+        max-width: 500px;
+        padding: 20px;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        animation-name: form;
+        animation-duration: .2s;
+        animation-fill-mode: forwards;
+        animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transform: translateY(-100%);
+
+        .area_close {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            span {
+                text-transform: uppercase;
+                font-size: 20px;
+            }
+
+            svg {
+                font-size: 25px;
+                cursor: pointer;
+            }
+        }
+
+        label {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            span {}
+
+            input {
+                padding: 10px;
+                border: solid 1px #d6d4d4;
+                border-radius: 5px;
+                outline: none;
+            }
+        }
+
+        button {
+            background-color: rgb(43, 168, 91);
+            padding: 10px;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 15px;
+        }
+    }
+}
